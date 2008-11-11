@@ -1,5 +1,5 @@
 %define	name	xl2tpd
-%define	version	1.1.11
+%define	version	1.2.3
 %define	release	%mkrel 1
 
 Summary: 	Layer 2 Tunnelling Protocol Daemon (RFC 2661)
