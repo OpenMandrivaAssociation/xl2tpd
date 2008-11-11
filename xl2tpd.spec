@@ -1,7 +1,7 @@
 Summary: 	Layer 2 Tunnelling Protocol Daemon (RFC 2661)
 Name:		xl2tpd
 Version:	1.2.3
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPLv2+
 Group:		Networking/Other
 Url: 		http://www.xelerance.com/software/xl2tpd/
@@ -87,4 +87,4 @@ fi
 %config(noreplace) %{_sysconfdir}/xl2tpd/*
 %config(noreplace) %{_sysconfdir}/ppp/*
 %attr(0755,root,root)  %{_initrddir}/xl2tpd
-%dir %{_var}/run/xl2tpd
+%dir %{_localstatedir}/run/xl2tpd
