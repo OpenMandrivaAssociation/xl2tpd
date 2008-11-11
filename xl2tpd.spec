@@ -1,23 +1,19 @@
-%define	name	xl2tpd
-%define	version	1.2.3
-%define	release	%mkrel 1
-
 Summary: 	Layer 2 Tunnelling Protocol Daemon (RFC 2661)
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
-License:	GPL
+Name:		xl2tpd
+Version:	1.2.3
+Release:	%mkrel 1
+License:	GPLv2+
+Group:		Networking/Other
 Url: 		http://www.xelerance.com/software/xl2tpd/
-Group: 		System Environment/Daemons
-Source0: 	http://www.xelerance.com/software/xl2tpd/xl2tpd-%{version}.tar.gz
-BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-Requires:	ppp 
-#BuildRequires:
+Source0: 	http://www.xelerance.com/software/xl2tpd/%{name}-%{version}.tar.gz
+BuildRequires:	pcap-devel
+Requires:	ppp
 Obsoletes:	l2tpd <= 0.69
-Provides: 	l2tpd = 0.69
-Requires(post): /sbin/chkconfig
-Requires(preun): /sbin/chkconfig
-Requires(preun): /sbin/service
+Provides:	l2tpd = 0.69
+Requires(post):	/sbin/chkconfig
+Requires(preun):	/sbin/chkconfig
+Requires(preun):	/sbin/service
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 xl2tpd is an implementation of the Layer 2 Tunnelling Protocol (RFC 2661).
@@ -33,24 +29,22 @@ Example configuration files for such a setup are included in this RPM.
 xl2tpd works by opening a pseudo-tty for communicating with pppd.
 It runs completely in userspace.
 
-
 %prep
 %setup -q
 
 %build
-make DFLAGS="$RPM_OPT_FLAGS -g -DDEBUG_PPPD -DDEBUG_CONTROL -DDEBUG_ENTROPY"
+%make DFLAGS="%{optflags} -g -DDEBUG_PPPD -DDEBUG_CONTROL -DDEBUG_ENTROPY"
 sed -i -e 's|chkconfig:[ \t][ \t]*|chkconfig: |' packaging/fedora/xl2tpd.init
 
 %install
 rm -rf %{buildroot}
-make DESTDIR=%{buildroot} install
+%makeinstall_std PREFIX="%{_prefix}"
 install -p -D -m644 examples/xl2tpd.conf %{buildroot}%{_sysconfdir}/xl2tpd/xl2tpd.conf
 install -p -D -m644 examples/ppp-options.xl2tpd %{buildroot}%{_sysconfdir}/ppp/options.xl2tpd
 install -p -D -m600 doc/l2tp-secrets.sample %{buildroot}%{_sysconfdir}/xl2tpd/l2tp-secrets
 install -p -D -m600 examples/chapsecrets.sample %{buildroot}%{_sysconfdir}/ppp/chap-secrets.sample
 install -p -D -m755 packaging/fedora/xl2tpd.init %{buildroot}%{_initrddir}/xl2tpd
 install -p -D -m755 -d %{buildroot}%{_localstatedir}/run/xl2tpd
-
 
 %clean
 rm -rf %{buildroot}
@@ -87,10 +81,10 @@ fi
 %doc BUGS CHANGES CREDITS LICENSE README.* TODO doc/rfc2661.txt 
 %doc doc/README.patents examples/chapsecrets.sample
 %{_sbindir}/xl2tpd
+%{bindir}/pfc
 %{_mandir}/*/*
 %dir %{_sysconfdir}/xl2tpd
 %config(noreplace) %{_sysconfdir}/xl2tpd/*
 %config(noreplace) %{_sysconfdir}/ppp/*
 %attr(0755,root,root)  %{_initrddir}/xl2tpd
-%dir %{_localstatedir}/run/xl2tpd
-
+%dir %{_var}/run/xl2tpd
