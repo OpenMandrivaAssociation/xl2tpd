@@ -1,13 +1,12 @@
 Summary: 	Layer 2 Tunnelling Protocol Daemon (RFC 2661)
 Name:		xl2tpd
-Version:	1.2.8
+Version:	1.3.0
 Release:	%mkrel 1
 License:	GPLv2+
 Group:		Networking/Other
 Url: 		http://www.xelerance.com/software/xl2tpd/
 Source0: 	http://www.xelerance.com/software/xl2tpd/%{name}-%{version}.tar.gz
 Patch0:		xl2tpd.c.patch
-Patch1:		control.c.patch
 BuildRequires:	pcap-devel
 Requires:	ppp
 Obsoletes:	l2tpd <= 0.69
@@ -34,7 +33,6 @@ It runs completely in userspace.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %make DFLAGS="%{optflags} -g -DDEBUG_PPPD -DDEBUG_CONTROL -DDEBUG_ENTROPY"
