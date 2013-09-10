@@ -1,16 +1,16 @@
-Summary: 	Layer 2 Tunnelling Protocol Daemon (RFC 2661)
+Summary:	Layer 2 Tunnelling Protocol Daemon (RFC 2661)
 Name:		xl2tpd
 Version:	1.3.0
-Release:	2
+Release:	3
 License:	GPLv2+
 Group:		Networking/Other
-Url: 		http://www.xelerance.com/software/xl2tpd/
-Source0: 	http://www.xelerance.com/software/xl2tpd/%{name}-%{version}.tar.gz
+Url:		http://www.xelerance.com/software/xl2tpd/
+Source0:	http://www.xelerance.com/software/xl2tpd/%{name}-%{version}.tar.gz
 Patch0:		xl2tpd.c.patch
 BuildRequires:	pcap-devel
 Requires:	ppp
-Requires(post,preun):	/sbin/chkconfig
-Requires(preun):	/sbin/service
+Requires(post,preun):	rpm-helper
+Requires(preun):	rpm-helper
 
 %description
 xl2tpd is an implementation of the Layer 2 Tunnelling Protocol (RFC 2661).
