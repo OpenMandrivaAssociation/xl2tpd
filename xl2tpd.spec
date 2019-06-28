@@ -1,11 +1,11 @@
 Summary:	Layer 2 Tunnelling Protocol Daemon (RFC 2661)
 Name:		xl2tpd
-Version:	1.3.6
-Release:	7
+Version:	1.3.14
+Release:	1
 License:	GPLv2+
 Group:		Networking/Other
 Url:		http://www.xelerance.com/software/xl2tpd/
-Source0:	http://www.xelerance.com/software/xl2tpd/%{name}-%{version}.tar.gz
+Source0:	https://github.com/xelerance/xl2tpd/archive/v%{version}.tar.gz
 BuildRequires:	pcap-devel
 Requires:	ppp
 Requires(post,preun):	rpm-helper
@@ -29,8 +29,8 @@ It runs completely in userspace.
 %setup -q
 
 %build
-export CC=gcc
-%make DFLAGS="%{optflags} -g -DDEBUG_PPPD -DDEBUG_CONTROL -DDEBUG_ENTROPY"
+#export CC=gcc
+%make DFLAGS="%{optflags} -g -DDEBUG_PPPD -DDEBUG_CONTROL -DDEBUG_ENTROPY" LDFLAGS="%{ldflags}"
 sed -i -e 's|chkconfig:[ \t][ \t]*|chkconfig: |' packaging/fedora/xl2tpd.init
 
 %install
@@ -69,7 +69,7 @@ if [ $1 -ge 1 ]; then
 fi
 
 %files
-%doc BUGS CHANGES CREDITS LICENSE README.* TODO doc/rfc2661.txt 
+%doc BUGS CHANGES CREDITS LICENSE README.* TODO
 %doc doc/README.patents examples/chapsecrets.sample
 %{_sbindir}/xl2tpd
 %{_sbindir}/xl2tpd-control
