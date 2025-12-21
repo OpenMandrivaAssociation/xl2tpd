@@ -8,6 +8,7 @@ Url:		https://github.com/xelerance/xl2tpd/
 Source0:	https://github.com/xelerance/xl2tpd/archive/v%{version}/%{name}-%{version}.tar.gz
 Source1:	%{name}.service
 Source2:	%{name}.tmpfiles
+BuildRequires:	make
 BuildRequires:	pkgconfig(libpcap)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(systemd)
