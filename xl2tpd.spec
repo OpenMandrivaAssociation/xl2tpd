@@ -1,6 +1,6 @@
 Summary:	Layer 2 Tunnelling Protocol Daemon (RFC 2661)
 Name:		xl2tpd
-Version:	1.3.18
+Version:	1.3.20
 Release:	1
 License:	GPLv2+
 Group:		Networking/Other
